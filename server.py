@@ -1,10 +1,8 @@
 import json
 import socket
 import sys
-
 from common.utils import get_message, send_message
-from common.variables import ACTION, PRESENCE, TIME, USER, ACCOUNT_NAME, RESPONSE, RESPONDEFAULT_IP_ADDRESSES, ERROR, \
-    DEFAULT_PORT, MAX_CONNECTIONS
+from common.variables import *
 
 
 class Server:
@@ -14,8 +12,8 @@ class Server:
                 and message[USER][ACCOUNT_NAME] == 'Guest':
             return {RESPONSE: 200}
         return {
-            RESPONDEFAULT_IP_ADDRESSES: 400,
-            ERROR: 'Bad Request'
+            RESPONSE: 400,
+            ERROR: 'Bad Request' 
         }
 
     def main(self):
