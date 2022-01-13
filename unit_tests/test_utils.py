@@ -45,15 +45,24 @@ class TestUtils(unittest.TestCase):
     def test_send_message_err(self):
         test_socket = TestSocket(self.test_dict_send)
         send_message(test_socket, self.test_dict_send)
-        self.assertRaises(TypeError, test_socket, send_message, 'wrong_dictionary')
+        self.assertRaises(TypeError, send_message, test_socket, 'wrong_dictionary')
 
     def test_get_message_ok(self):
         test_sock_ok = TestSocket(self.test_dict_recv_ok)
         self.assertEqual(get_message(test_sock_ok), self.test_dict_recv_ok)
 
+    def test_get_message_not_ok(self):
+        test_sock_ok = TestSocket(self.test_dict_recv_ok)
+        self.assertNotEqual(get_message(test_sock_ok), self.test_dict_recv_err)
+
     def test_get_message_err(self):
         test_sock_err = TestSocket(self.test_dict_recv_err)
         self.assertEqual(get_message(test_sock_err), self.test_dict_recv_err)
+
+    def test_get_message_not_err(self):
+        test_sock_ok = TestSocket(self.test_dict_recv_err)
+        self.assertNotEqual(get_message(test_sock_ok), self.test_dict_recv_ok)
+
 
 
 if __name__ == '__main__':
