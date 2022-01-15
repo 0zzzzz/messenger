@@ -4,8 +4,9 @@ import sys
 import time
 
 from common.utils import send_message, get_message
-from common.variables import ACTION, PRESENCE, TIME, USER, ACCOUNT_NAME, RESPONSE, ERROR, \
-    DEFAULT_IP_ADDRESS, DEFAULT_PORT
+# from common.variables import ACTION, PRESENCE, TIME, USER, ACCOUNT_NAME, RESPONSE, ERROR, \
+#     DEFAULT_IP_ADDRESS, DEFAULT_PORT
+from common.variables import *
 
 
 class Client:

@@ -1,6 +1,7 @@
 import json
 
-from common.variables import MAX_PACKAGE_LENGTH, ENCODING
+# from common.variables import MAX_PACKAGE_LENGTH, ENCODING
+from .variables import *
 
 
 def get_message(client):
@@ -15,6 +16,9 @@ def get_message(client):
 
 
 def send_message(sock, message):
+    if not isinstance(message, dict):
+        raise TypeError
     js_message = json.dumps(message)
     encoded_message = js_message.encode(ENCODING)
     sock.send(encoded_message)
+

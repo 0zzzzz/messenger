@@ -10,6 +10,6 @@ USER = 'user'
 ACCOUNT_NAME = 'account_name'
 
 PRESENCE = 'presence'
-RESPONSE = 'responce'
+RESPONSE = 'response'
 ERROR = 'error'
 RESPONDEFAULT_IP_ADDRESSES = 'respondefault_ip_addresses'
