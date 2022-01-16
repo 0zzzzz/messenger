@@ -1,3 +1,5 @@
+import logging
+
 DEFAULT_PORT = 7777
 DEFAULT_IP_ADDRESS = '127.0.0.1'
 MAX_CONNECTIONS = 5
@@ -13,3 +15,4 @@ PRESENCE = 'presence'
 RESPONSE = 'response'
 ERROR = 'error'
 RESPONDEFAULT_IP_ADDRESSES = 'respondefault_ip_addresses'
+LOGGING_LEVEL = logging.INFO
