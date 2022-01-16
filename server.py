@@ -23,7 +23,8 @@ class Server:
             ERROR: 'Bad Request'
         }
 
-    def create_arg_parser(self):
+    @staticmethod
+    def create_arg_parser():
         parser = argparse.ArgumentParser()
         parser.add_argument('-p', default=DEFAULT_PORT, type=int, nargs='?')
         parser.add_argument('-a', default='', nargs='?')
@@ -36,16 +37,13 @@ class Server:
         listen_address = namespace.a
         listen_port = namespace.p
 
-
         if not 1023 < listen_port < 65536:
             SERVER_LOGGER.critical(f'Попытка запуска сервера с указанием неподходящего порта '
                                    f'{listen_port}. Допустимы адреса с 1024 до 65535')
             sys.exit(1)
-        SERVER_LOGGER.info(f'Запущени сервер, порт для подключений: {listen_port},'
-                           f'адрес с которого принимаются сообщения: {listen_address}.'
+        SERVER_LOGGER.info(f'Запущен сервер, порт для подключений: {listen_port}, '
+                           f'адрес с которого принимаются сообщения: {listen_address}. '
                            f'Если адрес не указан, принимаются соединения с любых адресов')
-
-
         transport = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         transport.bind((listen_address, listen_port))
         transport.listen(MAX_CONNECTIONS)
@@ -62,7 +60,6 @@ class Server:
                 send_message(client, response)
                 SERVER_LOGGER.debug(f'Соединение с клиентом {client_address} закрывается')
                 client.close()
-            # except (ValueError, json.JSONDecodeError):
             except json.JSONDecodeError:
                 print('Принято некорректное сообщене от клиента')
                 SERVER_LOGGER.error(f'Не удалось декодировать JSON строку, получение от '

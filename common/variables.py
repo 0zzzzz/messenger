@@ -15,4 +15,4 @@ PRESENCE = 'presence'
 RESPONSE = 'response'
 ERROR = 'error'
 RESPONDEFAULT_IP_ADDRESSES = 'respondefault_ip_addresses'
-LOGGING_LEVEL = logging.INFO
+LOGGING_LEVEL = logging.DEBUG
