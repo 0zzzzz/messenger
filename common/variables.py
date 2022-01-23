@@ -1,6 +1,6 @@
 import logging
 
-DEFAULT_PORT = 7777
+DEFAULT_PORT = 7778
 DEFAULT_IP_ADDRESS = '127.0.0.1'
 MAX_CONNECTIONS = 5
 MAX_PACKAGE_LENGTH = 1024
@@ -10,9 +10,13 @@ ACTION = 'action'
 TIME = 'time'
 USER = 'user'
 ACCOUNT_NAME = 'account_name'
+SENDER = 'sender'
 
 PRESENCE = 'presence'
 RESPONSE = 'response'
 ERROR = 'error'
 RESPONDEFAULT_IP_ADDRESSES = 'respondefault_ip_addresses'
 LOGGING_LEVEL = logging.DEBUG
+
+MESSAGE = 'message'
+MESSAGE_TEXT = 'mess_text'
