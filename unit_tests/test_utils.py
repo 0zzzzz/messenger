@@ -1,29 +1,30 @@
-import os
 import sys
+sys.path.append('../')
+from common.utils import *
+from common.variables import *
 import unittest
-import json
-from common.variables import RESPONSE, ERROR, USER, ACCOUNT_NAME, TIME, ACTION, PRESENCE, ENCODING
-from common.utils import get_message, send_message
-sys.path.append('..')
+from errors import NonDictInputError
 
 
+# Тестовый класс для тестирования отпраки и получения, при создании требует словарь, который будет прогонятся
+# через тестовую функцию
 class TestSocket:
     def __init__(self, test_dict):
-        self.test_dict = test_dict
-        self.encoded_message = None
-        self.received_message = None
+        self.testdict = test_dict
 
+    # тестовая функция отправки, корретно  кодирует сообщение, так-же сохраняет что должно было отправлено в сокет.
     def send(self, message_to_send):
-        json_test_message = json.dumps(self.test_dict)
+        json_test_message = json.dumps(self.testdict)
         self.encoded_message = json_test_message.encode(ENCODING)
-        self.received_message = message_to_send
+        self.receved_message = message_to_send
 
     def recv(self, max_len):
-        json_test_message = json.dumps(self.test_dict)
+        json_test_message = json.dumps(self.testdict)
         return json_test_message.encode(ENCODING)
 
 
-class TestUtils(unittest.TestCase):
+# Тестовый класс, собственно выполняющий тестирование.
+class Tests(unittest.TestCase):
     test_dict_send = {
         ACTION: PRESENCE,
         TIME: 111111.111111,
@@ -37,32 +38,25 @@ class TestUtils(unittest.TestCase):
         ERROR: 'Bad Request'
     }
 
+    # тестируем корректность работы фукции отправки,создадим тестовый сокет и проверим корректность отправки словаря
     def test_send_message(self):
+        # экземпляр тестового словаря, хранит собственно тестовый словарь
         test_socket = TestSocket(self.test_dict_send)
+        # вызов тестируемой функции, результаты будут сохранены в тестовом сокете
         send_message(test_socket, self.test_dict_send)
-        self.assertEqual(test_socket.encoded_message, test_socket.received_message)
+        # проверка корретности кодирования словаря. сравниваем результат довренного кодирования и результат от тестируемой функции
+        self.assertEqual(test_socket.encoded_message, test_socket.receved_message)
+        # дополнительно, проверим генерацию исключения, при не словаре на входе.
+        self.assertRaises(NonDictInputError, send_message, test_socket, 1111)
 
-    def test_send_message_err(self):
-        test_socket = TestSocket(self.test_dict_send)
-        send_message(test_socket, self.test_dict_send)
-        self.assertRaises(TypeError, send_message, test_socket, 'wrong_dictionary')
-
-    def test_get_message_ok(self):
+    # тест функции приёма сообщения
+    def test_get_message(self):
         test_sock_ok = TestSocket(self.test_dict_recv_ok)
-        self.assertEqual(get_message(test_sock_ok), self.test_dict_recv_ok)
-
-    def test_get_message_not_ok(self):
-        test_sock_ok = TestSocket(self.test_dict_recv_ok)
-        self.assertNotEqual(get_message(test_sock_ok), self.test_dict_recv_err)
-
-    def test_get_message_err(self):
         test_sock_err = TestSocket(self.test_dict_recv_err)
+        # тест корректной расшифровки корректного словаря
+        self.assertEqual(get_message(test_sock_ok), self.test_dict_recv_ok)
+        # тест корректной расшифровки ошибочного словаря
         self.assertEqual(get_message(test_sock_err), self.test_dict_recv_err)
-
-    def test_get_message_not_err(self):
-        test_sock_ok = TestSocket(self.test_dict_recv_err)
-        self.assertNotEqual(get_message(test_sock_ok), self.test_dict_recv_ok)
-
 
 
 if __name__ == '__main__':
