@@ -20,17 +20,13 @@ process = []
 while True:
     TEXT_FOR_INPUT = "Выберите действие: q - выход, s - запустить сервер и клиенты, x - закрыть все окна: "
     action = input(TEXT_FOR_INPUT)
-
     if action == "q":
         break
     elif action == "s":
         process.append(get_subprocess("server.py"))
-
-        for i in range(2):
+        for i in range(3):
             process.append(get_subprocess(f"client.py -n test{i+1}"))
-
     elif action == "x":
         while process:
             victim = process.pop()
             os.killpg(victim.pid, signal.SIGINT)
-
