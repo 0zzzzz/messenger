@@ -48,4 +48,3 @@ class ClientMaker(type):
         else:
             raise TypeError('Отсутствуют вызовы функций, работающих с сокетами.')
         super().__init__(clsname, bases, clsdict)
-        
