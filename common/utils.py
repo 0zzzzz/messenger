@@ -1,9 +1,9 @@
 import json
 import sys
+from common.variables import *
+from common.decorator import log
 
 sys.path.append('../')
-from common.decorator import log
-from common.variables import *
 
 
 @log
