@@ -4,7 +4,6 @@ from PyQt5.QtWidgets import QDialog, QLabel, QComboBox, QPushButton, QApplicatio
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
 
-sys.path.append('../')
 
 logger = logging.getLogger('client_dist')
 
@@ -23,7 +22,6 @@ class DelContactDialog(QDialog):
         self.selector = QComboBox(self)
         self.selector.setFixedSize(200, 20)
         self.selector.move(10, 30)
-        self.selector.addItems(sorted(self.database.get_contacts()))
         self.btn_ok = QPushButton('Удалить', self)
         self.btn_ok.setFixedSize(100, 30)
         self.btn_ok.move(230, 20)
@@ -31,16 +29,11 @@ class DelContactDialog(QDialog):
         self.btn_cancel.setFixedSize(100, 30)
         self.btn_cancel.move(230, 60)
         self.btn_cancel.clicked.connect(self.close)
+        self.selector.addItems(sorted(self.database.get_contacts()))
 
 
 if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    from database import ClientDatabase
-
-    database = ClientDatabase('test1')
-    window = DelContactDialog(database)
-    database.add_contact('test2')
-    print(database.get_contacts())
-    window.selector.addItems(sorted(database.get_contacts()))
+    app = QApplication([])
+    window = DelContactDialog(None)
     window.show()
     app.exec_()
